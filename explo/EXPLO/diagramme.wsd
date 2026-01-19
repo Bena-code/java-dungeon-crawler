@@ -1,0 +1,261 @@
+@startuml
+
+
+class flecheheritage{
+    classe ___ classe parente
+
+    fleche d'utilisation
+
+    utilise ---> est utiliser par
+}
+
+class Joueur {
+  - nom: String
+  - position: Position
+  - inventaire: List<Objet>
+  - energie: int
+
+  + seDeplacer(direction: Direction): void
+  + interagir(outil: Outil): void
+  + recupere(): void
+  + ajouterObjet(objet: Objet): void
+  + diminuerEnergie(energie: int): void
+  + getTaille(): int
+  + get(index: int): Objet
+}
+
+
+class Jeu {
+  - plateau: Plateau
+  - listeCategories: Categorie[]
+  - proportionVides: int
+  - joueur: Joueur
+
+  + getPlateau(): Plateau
+  + setPlateau(Plateau): void
+  + getListeCategories(): Categorie[]
+  + setListeCategories(Categorie[]): void
+  + getProportionVides(): int
+  + setProportionVides(int): void
+  + getJoueur(): Joueur
+  + initJeu(): void
+  + isFini(): boolean
+  + joue(): void
+}
+
+class Plateau {
+  - jeu: Jeu
+  - visible: boolean
+  - grille: Salle[][]
+  - joueur: Joueur
+
+  + getJeu(): Jeu
+  + setJeu(Jeu): void (changed)
+  + isVisible(): boolean
+  + setVisible(boolean): void
+  + getNbSalles(): int
+  + getNbCol(): int
+  + getNbLig(): int
+  + getSalle(Position): Salle
+  + getSalle(int, int): Salle
+  + getJoueur(): Joueur
+  + getPosJoueur(): Position
+  + placeSalle(Salle): void
+  + setNouvelleSalle(Position, Objet): void
+  + setNouvelleSalle(Position): void
+  + Plateau(int, int, int, Categorie[], Jeu): void (constructor)
+  + toString(): String
+}
+
+class Salle {
+  - visible: boolean
+  - position: Position
+  - plateau: Plateau
+  - objet: Objet
+  - acces: List<Direction>
+
+  + isVisible(): boolean
+  + setVisible(boolean): void
+  + getPosition(): Position
+  + setPosition(Position): void
+  + getPlateau(): Plateau
+  + setPlateau(Plateau): void
+  + setObjet(Objet): void
+  + getObjet(): Objet
+  + setAcces(Direction): void
+  + getAcces(): List<Direction>
+  + initAcces(): void
+  + getVoisine(Direction): Salle
+  + getContenu(): Objet
+  + isVide(): boolean
+  + contientMine(): boolean
+  + entree(Joueur): void
+  + getSymbole(): String
+  + toString(boolean): String
+}
+
+class Objet {
+  - symbole: char
+  - nature: String
+  - descriptif: String
+
+  + getSymbole(): char
+  + getNature(): String
+  + getDescriptif(): String
+}
+
+class Outil extends Objet {
+  - consoenergie: int
+
+  + interaction(Joueur): void
+  + activation(Joueur): void
+}
+
+class Excavatrice extends Outil {
+  + interaction(Joueur): void
+  + activation(Joueur): void
+}
+
+class Scanneromnidirectionnel extends Outil {
+  + interaction(Joueur): void
+  + activation(Joueur): void
+}
+
+class ScannerUnidirectionnel extends Outil {
+  - direction: Direction
+
+  + interaction(Joueur): void
+  + activation(Joueur): void
+}
+
+class Mine extends Objet { }
+
+class Gagner extends Condition {
+  + verifierCondition(Joueur): boolean
+}
+class DetecteurMines extends Outil {
+  + interaction(Joueur): void (removed)
+  + activation(Joueur): void
+}
+
+class ReserveEnergie extends Objet {
+  - quantite: int
+
+  + getQuantite(): int
+  + utiliser(Joueur): void
+}
+
+class Categorie {
+  - classe: Class<?>
+  - proportion: int
+
+  + getClasse(): Class<?>
+  + setClasse(Class<?>): void
+  + getProportion(): int
+  + setProportion(int): void
+  + getNouveau(): Objet
+}
+
+class CaisseGrenade extends Objet {
+  - nombreGrenades: int
+
+  + getGrenade(): int
+  + utiliserGrenade(Joueur): void
+}
+
+class UniteDeminage extends Objet {
+  - nombreUnites: int
+
+  + utiliserUnite(Joueur): void
+}
+class ReserveEnergie extends Objet {
+ 
+
+  + getQuantite(): int
+  + utiliser(Joueur): void
+}
+class JeuDuDemineur {
+  - nbrlig: int
+  - nbrcol: int
+  - nbrvide: int
+  - jeu: Jeu
+
+  + main(String[]): void
+}
+class Position {
+  - rang: int
+  - plateau: Plateau
+  - gagner: booléen
+
+  + Position(int, Plateau): void  (constructeur)
+  + Position(int, int, Plateau): void  (constructeur)
+  + obtenirPlateau(): Plateau
+  + définirPlateau(Plateau): void
+  + obtenirRang(): int
+  + définirRang(int): void
+  + obtenirLigne(): int
+  + obtenirCaractereLigne(): char
+  + obtenirColonne(): int
+  + obtenirCaractereColonne(): char
+  + estValide(): booléen
+  + obtenirSuivante(): Position  (retourne la position suivante dans l'ordre gauche->droite, haut->bas)
+  + obtenirSalle(): Salle
+  + obtenirSuivante(Direction): Position  (retourne la position suivante dans la direction spécifiée)
+  + obtenirSalleSuivante(Position, Direction): Position  (obtient la salle suivante dans la direction spécifiée)
+  + obtenirDirection(Position): Direction  (calcule la direction vers une position cible)
+  + toString(): string
+}
+
+class Direction {
+  - dLig: int
+  - dCol: int
+
+  + getRang(): int
+  + getdLig(): int
+  + setdLig(int): void
+  + getdCol(): int
+  + setdCol(int): void
+  + isValide(): boolean
+  + isHorizontaleVerticale(): boolean
+  + getSucc(): Direction
+  + getPred(): Direction
+  + toString(): String
+  + getInverse(): Direction
+  + equals(Object): boolean
+}
+
+class LesOutils {
+  - liste: List<Outil>
+  - proprietaire: Joueur
+
+  + getTaille(): int
+  + get(int): Outil
+  + setListe(List<Outil>): void
+  + init(): void
+  + ajoute(Outil): void
+  + getProprietaire(): Joueur
+  + setProprietaire(Joueur): void
+}
+
+Joueur ...|> LesOutils
+Joueur ...|> Salle
+Joueur --..* inventaire
+Salle --..* contenu
+Salle ...|> Plateau
+Salle --* accessibilite
+Categorie ...|> Objet: creer
+
+Jeu ...|> Categorie: listeCategories
+Gagner ...|> Joueur
+DetecteurDeMine ...|> Categorie
+CaisseGrenade ...|>Categorie
+UniteDeminage ...|> Categorie
+Objet *-- LesOutils
+Position ...|> Salle
+Position...|> Joueur
+Position ...|> Plateau
+Direction <|... Joueur
+ScannerUnidirectionnel ...|> Direction
+Plateau ...|> Jeu
+JeuDuDemineur <|... Jeu
+@enduml
