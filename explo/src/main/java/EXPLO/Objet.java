@@ -1,4 +1,7 @@
 package src.main.java.EXPLO;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Objects;
 /**
  * Regroupe les points communs à tous les objets : un symbole, une nature (Mine par exemple) et la possibilité d'interagir avec le joueur
@@ -22,9 +25,9 @@ public abstract class Objet{
         this.nature = nature;
     }
     
-    public abstract void interaction(Joueur j);
+    public abstract void interaction(Joueur j, BufferedReader buffer, PrintWriter out) throws IOException;
         
-    public abstract void activation(Joueur j);
+    public abstract void activation(Joueur j, BufferedReader buffer, PrintWriter out) throws IOException;
     public int hashCode()
     {
         int hash = 5;
@@ -53,5 +56,3 @@ public abstract class Objet{
         return this.getSymbole();
     }
 }
-
-

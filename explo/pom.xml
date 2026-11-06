@@ -24,7 +24,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>3.1.0</version>
                 <configuration>
-                    <mainClass>EXPLO.JeuDuDemineur</mainClass>
+                    <mainClass>src.main.java.EXPLO.ServeurJeu</mainClass>
                 </configuration>
             </plugin>
         </plugins>

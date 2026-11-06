@@ -1,5 +1,7 @@
 package src.main.java.EXPLO;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 public class Direction
 {
     public static final Direction DROITE = new Direction("droite");
@@ -12,26 +14,31 @@ public class Direction
     public static final Direction BAS_DROITE = new Direction("bas droite");
     private static final Direction[] DIRECTIONS = {DROITE,HAUT_DROITE,HAUT,HAUT_GAUCHE,GAUCHE,BAS_GAUCHE,BAS,BAS_DROITE};
 
-    public static Direction getDirectionQuelconque()
-    {
-        Direction d;
-        do
-        {
-            System.out.print("Entrez une direction en combinant 'h','b','g','d' ou 'haut','bas','gauche','droite' : ");
-            d = new Direction(JeuDuDemineur.SCANNER.nextLine());
-        }while(!d.isValide());
-        return d;
+    public static Direction getDirectionQuelconque(BufferedReader buffer, PrintWriter out) throws IOException {
+        Direction direction;
+        do {
+            out.println("Entrez une direction en combinant 'h','b','g','d' ou 'haut','bas','gauche','droite' : ");
+            out.flush();
+            if (out.checkError()) {
+                throw new IOException("Impossible d'envoyer le message au joueur.");
+            }
+            direction = new Direction(ServeurJeu.lireLigne(buffer));
+        } while (!direction.isValide());
+        return direction;
     }
 
-    public static Direction getDirectionHorizontaleVerticale()
-    {
-        Direction d;
-        do
-        {
-            System.out.print("Entrez une direction 'h','b','g','d' ou 'haut','bas','gauche','droite' : ");
-            d = new Direction(JeuDuDemineur.SCANNER.nextLine());
-        }while(!d.isHorizontaleVerticale());
-        return d;
+    public static Direction getDirectionHorizontaleVerticale(BufferedReader buffer, PrintWriter out)
+            throws IOException {
+        Direction direction;
+        do {
+            out.print("Entrez une direction 'h','b','g','d' ou 'haut','bas','gauche','droite' : ");
+            out.flush();
+            if (out.checkError()) {
+                throw new IOException("Impossible d'envoyer le message au joueur.");
+            }
+            direction = new Direction(ServeurJeu.lireLigne(buffer));
+        } while (!direction.isHorizontaleVerticale());
+        return direction;
     }
 
     /**

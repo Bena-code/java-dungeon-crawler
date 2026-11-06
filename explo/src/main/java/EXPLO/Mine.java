@@ -1,13 +1,16 @@
 package src.main.java.EXPLO;
 
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+
 public class Mine extends Objet
 {
-    public void interaction(Joueur j){
+    public void interaction(Joueur j, BufferedReader buffer, PrintWriter out) {
         j.setPerdant(true);
-        System.out.println("BOOUUUUMMM , vous etes tomber sur une Mine !!!!!!");
-        System.out.println("PERDU");
+        out.println("BOOUUUUMMM , vous etes tomber sur une Mine !!!!!!");
+        out.println("PERDU");
     }
-    public void activation(Joueur j){
+    public void activation(Joueur j, BufferedReader buffer, PrintWriter out) {
         
     }
 
@@ -15,5 +18,3 @@ public class Mine extends Objet
         super("*","Mine");
     }
 }
-
-

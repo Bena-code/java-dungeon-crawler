@@ -1,4 +1,5 @@
 package src.main.java.EXPLO;
+
 public abstract class Outil extends Objet
 {    
     private int conso;

@@ -1,5 +1,9 @@
 package src.main.java.EXPLO;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class DetecteurMines extends Outil {
 
     public DetecteurMines() {
@@ -7,15 +11,15 @@ public class DetecteurMines extends Outil {
     }
 
     // QUAND ON LE RAMASSE
-    public void interaction(Joueur j) {
-        System.out.println("Vous avez trouvé un Détecteur de Mines !");
+    public void interaction(Joueur j, BufferedReader buffer, PrintWriter out) {
+        out.println("Vous avez trouvé un Détecteur de Mines !");
         j.recupere();
     }
 
     // QUAND ON L'UTILISE
-    public void activation(Joueur j) {
+    public void activation(Joueur j, BufferedReader buffer, PrintWriter out) {
         if (j.getEnergie() < this.getconsoenergie()) {
-            System.out.println("Pas assez d'énergie !");
+            out.println("Pas assez d'énergie !");
             return;
         }
         
@@ -34,9 +38,9 @@ public class DetecteurMines extends Outil {
         }
 
         if (mines > 0) {
-            System.out.println("DANGER ! " + mines + " mine(s) autour de vous !");
+            out.println("DANGER ! " + mines + " mine(s) autour de vous !");
         } else {
-            System.out.println("Aucune mine détectée autour.");
+            out.println("Aucune mine détectée autour.");
         }
     }
 }

@@ -1,6 +1,8 @@
 package src.main.java.EXPLO;
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 /**
@@ -38,7 +40,7 @@ public class CaisseGrenades extends Objet {
         this.nombreGrenades = random.nextInt(MAX) + 1; // Génère un nombre aléatoire entre 1 et MAX inclus
         this.enSalle = Math.random() * 100 < PROBABILITE_SALLE;
     }   
-    public void activation(Joueur j){ }
+    public void activation(Joueur j, BufferedReader buffer, PrintWriter out) { }
     /**
      * Permet à un joueur d'interagir avec la caisse de grenades en prenant un
      * certain nombre de grenades.
@@ -46,22 +48,25 @@ public class CaisseGrenades extends Objet {
      * @param joueur Le joueur qui interagit avec la caisse de grenades.
      */
     
-    public void interaction(Joueur joueur) {
+    public void interaction(Joueur joueur, BufferedReader buffer, PrintWriter out) throws IOException {
         
         if (nombreGrenades > 0) {
-            System.out.println("Il y a " + nombreGrenades + " grenades dans la caisse.");
-            int grenadesAPrendre = JeuDuDemineur.lireEntier("Combien de grenades voulez-vous prendre ?");
-            if (grenadesAPrendre > nombreGrenades) {
-                System.out.println("Il n'y a pas assez de grenades dans la caisse.");
+            out.println("Il y a " + nombreGrenades + " grenades dans la caisse.");
+            int grenadesAPrendre = ServeurJeu.lireEntier(
+                    "Combien de grenades voulez-vous prendre ?", buffer, out);
+            if (grenadesAPrendre <= 0) {
+                out.println("Vous devez prendre au moins une grenade.");
+            } else if (grenadesAPrendre > nombreGrenades) {
+                out.println("Il n'y a pas assez de grenades dans la caisse.");
             } else if (grenadesAPrendre > joueur.getNbGrenadesMax() - joueur.getNombreGrenades()) {
-                System.out.println("Vous n'avez pas assez de place pour prendre autant de grenades.");
+                out.println("Vous n'avez pas assez de place pour prendre autant de grenades.");
             } else {
                 joueur.ajouterGrenades(grenadesAPrendre);
                 nombreGrenades -= grenadesAPrendre;
-                System.out.println("Vous avez pris " + grenadesAPrendre + " grenades dans la caisse.");
+                out.println("Vous avez pris " + grenadesAPrendre + " grenades dans la caisse.");
             }
         } else {
-            System.out.println("La caisse de grenades est vide.");
+            out.println("La caisse de grenades est vide.");
         }
     }
 }

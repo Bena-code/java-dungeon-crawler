@@ -1,4 +1,7 @@
 package src.main.java.EXPLO;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class Salle {
@@ -87,12 +90,12 @@ public class Salle {
     }
     // verifier si il y a une mine dans la salle
     public boolean contientMine(){
-        return getContenu().getNature().equals("Mine");
+        return getContenu() != null && getContenu().getNature().equals("Mine");
     }
     // verifie si la salle contient un objet si non declanche l'interraction entre le joueur et l'objet
-    public void entree(Joueur j) {
+    public void entree(Joueur j, BufferedReader buffer, PrintWriter out) throws IOException {
         if (!this.isVide()) {
-            this.objet.interaction(j);
+            this.objet.interaction(j, buffer, out);
         }
     }
 

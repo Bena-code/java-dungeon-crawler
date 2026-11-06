@@ -1,7 +1,9 @@
 package src.main.java.EXPLO;
 
 
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Random;
 
 /**
@@ -41,7 +43,7 @@ public class ReserveEnergie extends Objet {
         return quantite;
     }
 
-    public void activation(Joueur j){ }
+    public void activation(Joueur j, BufferedReader buffer, PrintWriter out) { }
     /**
      * Permet à un joueur d'interagir avec la réserve d'énergie en prenant une
      * certaine quantité d'énergie.
@@ -51,31 +53,34 @@ public class ReserveEnergie extends Objet {
      * @param j Le joueur qui interagit avec la réserve d'énergie.
      */
     
-    public void interaction(Joueur j) {
+    public void interaction(Joueur j, BufferedReader buffer, PrintWriter out) throws IOException {
         int energieJoueur = j.getEnergie();
         int energieDisponible = getQuantite();
 
         if (energieDisponible > 0) {
-            System.out.println("Il reste " + energieDisponible + " unités d'énergie dans la réserve.");
-            System.out.println("Vous avez actuellement " + energieJoueur + " unités d'énergie.");
+            out.println("Il reste " + energieDisponible + " unités d'énergie dans la réserve.");
+            out.println("Vous avez actuellement " + energieJoueur + " unités d'énergie.");
 
             // Demander au joueur combien d'énergie il veut prendre
-            int energieAPrendre = JeuDuDemineur.lireEntier("Combien d'énergie voulez-vous prendre ?");
+            int energieAPrendre = ServeurJeu.lireEntier(
+                    "Combien d'énergie voulez-vous prendre ?", buffer, out);
 
             // Vérifier si le joueur peut prendre autant d'énergie
-            if (energieAPrendre > energieDisponible) {
-                System.out.println("Il n'y a pas assez d'énergie dans la réserve.");
+            if (energieAPrendre <= 0) {
+                out.println("Vous devez prendre au moins une unité d'énergie.");
+            } else if (energieAPrendre > energieDisponible) {
+                out.println("Il n'y a pas assez d'énergie dans la réserve.");
             } else if (energieJoueur + energieAPrendre > ENERGIE_MAX) {
-                System.out.println("Vous ne pouvez pas stocker autant d'énergie.");
+                out.println("Vous ne pouvez pas stocker autant d'énergie.");
             } else {
                 // Ajouter l'énergie prise au joueur
                 j.ajouterEnergie(energieAPrendre);
                 // Mettre à jour la quantité d'énergie dans la réserve
                 quantite -= energieAPrendre;
-                System.out.println("Vous avez pris " + energieAPrendre + " unités d'énergie dans la réserve.");
+                out.println("Vous avez pris " + energieAPrendre + " unités d'énergie dans la réserve.");
             }
         } else {
-            System.out.println("La réserve d'énergie est vide.");
+            out.println("La réserve d'énergie est vide.");
         }
     }
 }

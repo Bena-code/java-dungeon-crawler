@@ -1,5 +1,6 @@
 package src.main.java.EXPLO;
 import java.util.ArrayList;
+import java.io.PrintWriter;
 public class LesOutils {
    
     private ArrayList<Outil> liste;
@@ -20,9 +21,9 @@ public class LesOutils {
         liste.add(new DetecteurMines()); // idem
     }
 
-    public void ajoute(Outil o)
+    public void ajoute(Outil o, PrintWriter out)
     {
-        if(this.liste.contains(o)) System.out.println(this.getProprietaire()+" est déjà en possession de "+o);
+        if(this.liste.contains(o)) out.println(this.getProprietaire()+" est déjà en possession de "+o);
         else this.liste.add(o);
     }
     
@@ -42,5 +43,3 @@ public class LesOutils {
     }
 
 }
-
-

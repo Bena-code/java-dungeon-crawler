@@ -36,13 +36,16 @@ Ce projet démontre la maîtrise des concepts fondamentaux de l'ingénierie logi
 ### Installation et Exécution
 1.  Compilez les fichiers sources :
     ```bash
-    javac EXPLO/*.java
+    mkdir -p target/classes
+    javac -d target/classes src/main/java/EXPLO/*.java
     ```
 
 2.  Lancez le jeu :
     ```bash
-    java EXPLO.JeuDuDemineur
+    java -cp target/classes src.main.java.EXPLO.ServeurJeu
     ```
+
+Le serveur attend une connexion du client sur le port `5555`.
 
 ## 🕹️ Commandes en Jeu
 Une fois dans la console, interagissez avec les commandes textuelles :
@@ -50,4 +53,3 @@ Une fois dans la console, interagissez avec les commandes textuelles :
 * `utiliser` : Ouvrir l'inventaire pour utiliser un outil (Scanner, Détecteur...).
 * `debug` : **(Dev Mode)** Révèle ou cache toute la carte instantanément.
 * `quitter` : Fermer le programme.
-

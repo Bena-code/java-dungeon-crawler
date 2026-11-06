@@ -1,5 +1,8 @@
 package src.main.java.EXPLO;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class Scanneromnidirectionnel extends Outil {
    
@@ -11,44 +14,24 @@ public class Scanneromnidirectionnel extends Outil {
     }
 
  
-    public void interaction(Joueur j) {
-            Scanneromnidirectionnel scan= new Scanneromnidirectionnel();
-            System.out.println("vous venez de recupere un detecteur de mine");
-            j.ajouterObjet(scan);
-            j.recupere();
-            for (int i = 0; i < j.getTaille(); i++) {
-                if(j.get(i)==scan){
-                System.out.println(" Vous etes deja en possesion de l'outil");
-                
-                return;}
-            }
-            // Vérifier si le joueur a assez d'énergie pour utiliser l'outil
-        if (j.getEnergie() < (this.getconsoenergie()) ){
-            System.out.println("Vous n'avez pas assez d'énergie pour utiliser cet outil.");
+    public void interaction(Joueur j, BufferedReader buffer, PrintWriter out) {
+        out.println("Vous avez trouvé un scanner omnidirectionnel !");
+        j.recupere();
+    }
+    
+    public void activation(Joueur j, BufferedReader buffer, PrintWriter out) throws IOException {
+        if (j.getEnergie() < this.getconsoenergie()) {
+            out.println("Vous n'avez pas assez d'énergie pour utiliser cet outil.");
             return;
         }
-        // Consommer l'énergie de l'outil
-        j.diminuerEnergie(j.getEnergie() - (this.getconsoenergie()));
-        // Activer l'outil (explorer les salles adjacentes et détecter les mines)
-        this.activation(j);
-        }
-    
-        public void activation(Joueur j) {
+
+        j.diminuerEnergie(this.getconsoenergie());
         // Informer le joueur de la fonctionnalité du scanner et des directions disponibles
-        System.out.println("Le scanner omnidirectionnel permet de scanner les salles dans toutes les directions.");
-        System.out.println("Directions disponibles :  'haut','bas','gauche','droite'");
+        out.println("Le scanner omnidirectionnel permet de scanner les salles dans toutes les directions.");
+        out.println("Directions disponibles :  'haut','bas','gauche','droite'");
 
         // Demander au joueur de choisir une direction
-        Direction direction = null;
-        do {
-            System.out.println("Entrez une direction : ");
-            String directionTexte = JeuDuDemineur.SCANNER.nextLine();
-            try {
-                direction = Direction.getDirection(directionTexte);
-            } catch (IllegalArgumentException e) {
-                System.out.println("Direction invalide. Veuillez réessayer.");
-            }
-        } while (direction == null);
+        Direction direction = Direction.getDirectionHorizontaleVerticale(buffer, out);
 
         // Scanner les salles jusqu'à ce que le joueur souhaite arrêter
         boolean continuer = true;
@@ -57,23 +40,18 @@ public class Scanneromnidirectionnel extends Outil {
             Plateau plateau = positionJoueur.getPlateau();
 
             // Scanner les salles dans la direction choisie
-            while (true) {
-                Position positionVirtuelle = positionJoueur.getSalleSuivante(positionJoueur, direction);
-
-                if (positionVirtuelle == null) {
-                    break;
-                }
-
+            Position positionVirtuelle = positionJoueur;
+            while ((positionVirtuelle = positionVirtuelle.getSalleSuivante(positionVirtuelle, direction)) != null) {
                 Salle salle = plateau.getSalle(positionVirtuelle);
-                System.out.println("Salle scannée : " + salle.getContenu());
+                out.println("Salle scannée : " + salle.getContenu());
             }
 
             // Demander au joueur s'il souhaite continuer à scanner
-            System.out.println("Voulez-vous continuer à scanner ? (Oui/Non)");
-            continuer = JeuDuDemineur.SCANNER.nextLine().equalsIgnoreCase("Oui");
+            continuer = ServeurJeu.lireTexte("Voulez-vous continuer à scanner ? (Oui/Non)", buffer, out)
+                    .equalsIgnoreCase("Oui");
         }
 
-        System.out.println("Le scan est terminé.");
+        out.println("Le scan est terminé.");
     }
 
 }

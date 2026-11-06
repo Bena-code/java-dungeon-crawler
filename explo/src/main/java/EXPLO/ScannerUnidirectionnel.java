@@ -1,5 +1,9 @@
 package src.main.java.EXPLO;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 public class ScannerUnidirectionnel extends Outil {
 
 
@@ -9,24 +13,21 @@ public class ScannerUnidirectionnel extends Outil {
     }
 
     // INTERACTION = QUAND ON MARCHE DESSUS (On le ramasse juste)
-    public void interaction(Joueur j) {
-        System.out.println("Vous avez trouvé un " + this.getNature() + " !");
+    public void interaction(Joueur j, BufferedReader buffer, PrintWriter out) {
+        out.println("Vous avez trouvé un " + this.getNature() + " !");
         j.recupere(); 
     }
 
     // ACTIVATION = QUAND ON L'UTILISE DEPUIS L'INVENTAIRE (On paye l'énergie et on scanne)
-    public void activation(Joueur j) {
+    public void activation(Joueur j, BufferedReader buffer, PrintWriter out) throws IOException {
         // 1. Vérifier l'énergie
         if (j.getEnergie() < this.getconsoenergie()) {
-            System.out.println("Pas assez d'énergie !");
+            out.println("Pas assez d'énergie !");
             return;
         }
 
         // 2. Demander la direction (Code déplacé ici !)
-        System.out.println("Direction du scan (haut, bas, gauche, droite) ?");
-        String dirStr = JeuDuDemineur.SCANNER.nextLine();
-        Direction dir = Direction.getDirection(dirStr);
-        if(!dir.isValide()) return;
+        Direction dir = Direction.getDirectionHorizontaleVerticale(buffer, out);
 
         // 3. Consommer l'énergie
         j.diminuerEnergie(this.getconsoenergie());
@@ -45,10 +46,10 @@ public class ScannerUnidirectionnel extends Outil {
             
             // Si on trouve quelque chose qui n'est pas vide
             if (!salle.isVide()) {
-                System.out.println("Scanner : Objet détecté à " + distance + " cases !");
+                out.println("Scanner : Objet détecté à " + distance + " cases !");
                 return; // On s'arrête au premier objet trouvé
             }
         }
-        System.out.println("Scanner : Rien détecté dans cette direction.");
+        out.println("Scanner : Rien détecté dans cette direction.");
     }
 }

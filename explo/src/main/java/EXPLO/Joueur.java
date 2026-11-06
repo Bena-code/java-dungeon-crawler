@@ -1,5 +1,8 @@
 package src.main.java.EXPLO;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,12 +49,12 @@ public class Joueur{
         return this.position;
     }
 
-    private void setPosition(Position position) {
+    private void setPosition(Position position, BufferedReader buffer, PrintWriter out) throws IOException {
         // Assurez-vous que la nouvelle position est valide
         if (position != null && position.getPlateau() != null && position.getPlateau().getSalle(position) != null) {
             this.position = position;
             // Mettez à jour la salle du joueur
-            this.position.getPlateau().getSalle(this.position).entree(this);
+            this.position.getPlateau().getSalle(this.position).entree(this, buffer, out);
         }
     }
 
@@ -78,16 +81,16 @@ public class Joueur{
     /// methode en plus pour le joueur : avancer , ajtbojet, recupere, lancegrenade ,ajouteenergie 
 
     // Méthode pour avancer dans une direction donnée
-    public void avance(Direction direction) {
+    public void avance(Direction direction, BufferedReader buffer, PrintWriter out) throws IOException {
             // Obtenez la position actuelle du joueur
         Position nouvellePosition = this.getPosition().getSalleSuivante(this.getPosition(),direction);
         // Vérifiez si la nouvelle position est valide
         if (nouvellePosition != null) {
             // Déplacez le joueur vers la nouvelle position
-            this.setPosition(nouvellePosition);
+            this.setPosition(nouvellePosition, buffer, out);
         } else {
             // Affichez un message d'erreur si la nouvelle position est invalide
-            System.out.println("Déplacement impossible dans cette direction !");
+            out.println("Déplacement impossible dans cette direction !");
         }
     }
 
@@ -115,7 +118,7 @@ public class Joueur{
         }
     }
 
-    public void lanceGrenade(Direction direction){
+    public void lanceGrenade(Direction direction, BufferedReader buffer, PrintWriter out) throws IOException {
         if (this.nombreGrenades > 0) { // Vérifier si le joueur a des grenades
             Position positionGrenade = this.position.getSuivante(direction); // Obtenir la position de la grenade
             Plateau plateau = this.position.getPlateau();
@@ -124,7 +127,7 @@ public class Joueur{
                 if (salleGrenade != null && !salleGrenade.isVide()) { // Vérifier si la salle cible contient un objet
                     Objet objetCible = salleGrenade.getContenu();
                     if (objetCible instanceof Mine) { // Vérifier si l'objet cible est une mine
-                        ((Mine) objetCible).interaction(this); // Interagir avec la mine pour perdre le jeu
+                        ((Mine) objetCible).interaction(this, buffer, out);
                     }
                 }
                 this.nombreGrenades--; // Décrémenter le nombre de grenades du joueur

@@ -2,15 +2,7 @@ package src.main.java.EXPLO;
 
 import java.lang.reflect.InvocationTargetException;
 
-/**
- * Classe complète
- * Les instances de Categorie créent des instance d'objets de classes variées
- * (En parcourant un tableau de catégories, on peut créer des instances de
- * classes différentes)
- * Cela permet de remplir le plateau avec des objets divers
- * 
- * @author jo
- */
+
 public class Categorie {
 
     private Class<?> classe;
@@ -67,6 +59,5 @@ public class Categorie {
         this.setClasse(classe);
     }
 }
-
 
 
