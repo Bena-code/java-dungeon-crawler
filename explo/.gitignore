@@ -1,1 +1,9 @@
-/bin/
+# Fichiers compilés classiques
+*.class
+
+# Dossier de build de Maven (très important !)
+target/
+
+# Fichiers systèmes MacOS/Windows
+.DS_Store
+Thumbs.db
