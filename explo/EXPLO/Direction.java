@@ -17,7 +17,8 @@ public class Direction
         Direction d;
         do
         {
-            d = new Direction(Lire.S("Entrez une direction en combinant 'h','b','g','d' ou 'haut','bas','gauche','droite'"));
+            System.out.print("Entrez une direction en combinant 'h','b','g','d' ou 'haut','bas','gauche','droite' : ");
+            d = new Direction(JeuDuDemineur.SCANNER.nextLine());
         }while(!d.isValide());
         return d;
     }
@@ -27,7 +28,8 @@ public class Direction
         Direction d;
         do
         {
-            d = new Direction(Lire.S("Entrez une direction 'h','b','g','d' ou 'haut','bas','gauche','droite'"));
+            System.out.print("Entrez une direction 'h','b','g','d' ou 'haut','bas','gauche','droite' : ");
+            d = new Direction(JeuDuDemineur.SCANNER.nextLine());
         }while(!d.isHorizontaleVerticale());
         return d;
     }
@@ -263,4 +265,3 @@ public class Direction
     
 }
     
-

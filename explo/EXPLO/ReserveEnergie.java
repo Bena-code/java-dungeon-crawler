@@ -60,7 +60,7 @@ public class ReserveEnergie extends Objet {
             System.out.println("Vous avez actuellement " + energieJoueur + " unités d'énergie.");
 
             // Demander au joueur combien d'énergie il veut prendre
-            int energieAPrendre = Lire.i("Combien d'énergie voulez-vous prendre ?");
+            int energieAPrendre = JeuDuDemineur.lireEntier("Combien d'énergie voulez-vous prendre ?");
 
             // Vérifier si le joueur peut prendre autant d'énergie
             if (energieAPrendre > energieDisponible) {
@@ -79,4 +79,3 @@ public class ReserveEnergie extends Objet {
         }
     }
 }
-

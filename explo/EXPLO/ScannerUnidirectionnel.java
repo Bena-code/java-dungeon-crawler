@@ -24,7 +24,7 @@ public class ScannerUnidirectionnel extends Outil {
 
         // 2. Demander la direction (Code déplacé ici !)
         System.out.println("Direction du scan (haut, bas, gauche, droite) ?");
-        String dirStr = Lire.S();
+        String dirStr = JeuDuDemineur.SCANNER.nextLine();
         Direction dir = Direction.getDirection(dirStr);
         if(!dir.isValide()) return;
 

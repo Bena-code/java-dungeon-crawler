@@ -18,7 +18,7 @@ public class UnitéDeDeminage extends Outil {
         }
 
         System.out.println("Direction à déminer ? (haut, bas, gauche, droite)");
-        Direction dir = Direction.getDirection(Lire.S());
+        Direction dir = Direction.getDirection(JeuDuDemineur.SCANNER.nextLine());
         if (!dir.isValide()) return;
 
         j.diminuerEnergie(this.getconsoenergie());

@@ -18,7 +18,7 @@ public class Excavatrice extends Outil {
         }
 
         System.out.println("Quel mur détruire ? (haut, bas, gauche, droite)");
-        Direction dir = Direction.getDirection(Lire.S());
+        Direction dir = Direction.getDirection(JeuDuDemineur.SCANNER.nextLine());
         if (!dir.isValide()) return;
 
         Position pos = j.getPosition();

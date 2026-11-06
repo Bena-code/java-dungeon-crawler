@@ -50,7 +50,7 @@ public class CaisseGrenades extends Objet {
         
         if (nombreGrenades > 0) {
             System.out.println("Il y a " + nombreGrenades + " grenades dans la caisse.");
-            int grenadesAPrendre = Lire.i("Combien de grenades voulez-vous prendre ?");
+            int grenadesAPrendre = JeuDuDemineur.lireEntier("Combien de grenades voulez-vous prendre ?");
             if (grenadesAPrendre > nombreGrenades) {
                 System.out.println("Il n'y a pas assez de grenades dans la caisse.");
             } else if (grenadesAPrendre > joueur.getNbGrenadesMax() - joueur.getNombreGrenades()) {
@@ -65,4 +65,3 @@ public class CaisseGrenades extends Objet {
         }
     }
 }
-

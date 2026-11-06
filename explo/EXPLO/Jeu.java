@@ -52,7 +52,8 @@ public class Jeu {
 
     public void joue() {
         // Demander au joueur de taper son pseudo
-        String pseudo = Lire.S("Entrez votre pseudo  ");
+        System.out.print("Entrez votre pseudo   : ");
+        String pseudo = JeuDuDemineur.SCANNER.nextLine();
         // Récupérer le joueur depuis le plateau et définir son nom avec le pseudo saisi
         Joueur joueur = this.plateau.getJoueur();
         
@@ -67,13 +68,15 @@ public class Jeu {
             System.out.println("Position actuelle : " + joueur.getPosition());
             System.out.println(this.plateau);
             // Demander au joueur l'action à effectuer
-            String action = Lire.S("Que voulez-vous faire ? (avancer / utiliser / quitter)");
+            System.out.print("Que voulez-vous faire ? (avancer / utiliser / quitter) : ");
+            String action = JeuDuDemineur.SCANNER.nextLine();
             
             // Traiter l'action du joueur
             switch (action.toLowerCase()) {
                 case "avancer":
                         // 1. Demander la direction
-                        String directionStr = Lire.S("Dans quelle direction voulez-vous avancer ? (haut / bas / gauche / droite)");
+                        System.out.print("Dans quelle direction voulez-vous avancer ? (haut / bas / gauche / droite) : ");
+                        String directionStr = JeuDuDemineur.SCANNER.nextLine();
                         Direction direction = Direction.getDirection(directionStr);
                         
                         // 2. Calculer les positions
@@ -100,7 +103,8 @@ public class Jeu {
                             System.out.println("Le passage est bloqué par un mur.");
                             
                             if (joueur.getNombreGrenades() > 0) {
-                                String rep = Lire.S("Voulez-vous utiliser une grenade pour détruire le mur ? (oui/non)");
+                                System.out.print("Voulez-vous utiliser une grenade pour détruire le mur ? (oui/non) : ");
+                                String rep = JeuDuDemineur.SCANNER.nextLine();
                                 if (rep.equalsIgnoreCase("oui")) {
                                     // On utilise la grenade
                                     joueur.lanceGrenade(direction); // Note: ta méthode lanceGrenade décrémente déjà le compteur
@@ -134,7 +138,7 @@ public class Jeu {
                         System.out.println(i + 1 + ". " + outil.getInfos()); // Afficher le numéro et le nom de l'outil
                     }
                     // Demander la sélection de l'outil
-                    int choixOutil = Lire.i("Sélectionnez l'outil à utiliser (par son numéro) :");
+                    int choixOutil = JeuDuDemineur.lireEntier("Sélectionnez l'outil à utiliser (par son numéro)");
                     // Vérifier la validité de la saisie
                     if (choixOutil < 1 || choixOutil > joueur.getTaille()) {
                         System.out.println("Numéro d'outil invalide. Veuillez réessayer.");

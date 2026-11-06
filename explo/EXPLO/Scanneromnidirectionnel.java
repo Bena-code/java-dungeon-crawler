@@ -42,7 +42,7 @@ public class Scanneromnidirectionnel extends Outil {
         Direction direction = null;
         do {
             System.out.println("Entrez une direction : ");
-            String directionTexte = Lire.S();
+            String directionTexte = JeuDuDemineur.SCANNER.nextLine();
             try {
                 direction = Direction.getDirection(directionTexte);
             } catch (IllegalArgumentException e) {
@@ -70,7 +70,7 @@ public class Scanneromnidirectionnel extends Outil {
 
             // Demander au joueur s'il souhaite continuer à scanner
             System.out.println("Voulez-vous continuer à scanner ? (Oui/Non)");
-            continuer = Lire.S().equalsIgnoreCase("Oui");
+            continuer = JeuDuDemineur.SCANNER.nextLine().equalsIgnoreCase("Oui");
         }
 
         System.out.println("Le scan est terminé.");
@@ -78,4 +78,3 @@ public class Scanneromnidirectionnel extends Outil {
 
 }
     
-
