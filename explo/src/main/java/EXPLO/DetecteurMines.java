@@ -1,4 +1,4 @@
-package EXPLO;
+package src.main.java.EXPLO;
 
 public class DetecteurMines extends Outil {
 

@@ -1,4 +1,4 @@
-package EXPLO;
+package src.main.java.EXPLO;
 import java.util.Objects;
 /**
  * Regroupe les points communs à tous les objets : un symbole, une nature (Mine par exemple) et la possibilité d'interagir avec le joueur

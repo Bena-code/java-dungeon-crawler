@@ -1,4 +1,4 @@
-package EXPLO;
+package src.main.java.EXPLO;
 import java.util.ArrayList;
 public class LesOutils {
    

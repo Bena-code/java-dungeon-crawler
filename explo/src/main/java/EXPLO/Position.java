@@ -1,4 +1,4 @@
-package EXPLO;
+package src.main.java.EXPLO;
 
 /**
  * Permet de gérer une position dans un plateau donné.

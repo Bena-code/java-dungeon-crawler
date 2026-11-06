@@ -1,4 +1,4 @@
-package EXPLO;
+package src.main.java.EXPLO;
 public class Jeu {
     private Plateau plateau;
     private Categorie[] listeCategories;
